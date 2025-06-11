@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web画像テキスト抽出アプリケーション - ドキュメント</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-top: 1.5em;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .bash {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Web画像テキスト抽出アプリケーション</h1>
+
+    <p>このアプリケーションは、指定されたWebサイトから画像を抽出し、Google Gemini APIを使用して画像内のテキストを認識するツールです。また、ローカルの画像ファイルからもテキストを抽出できます。</p>
+
+    <h2>機能</h2>
+
+    <h3>Webサイトからのテキスト抽出</h3>
+    <ul>
+        <li>Webサイトからの画像の自動抽出</li>
+        <li>画像内のテキスト認識（OCR）</li>
+        <li>認識したテキストの編集機能</li>
+        <li>結果のExcelファイルへのエクスポート</li>
+        <li>SVG画像の自動JPG変換対応</li>
+    </ul>
+
+    <h3>手動画像アップロード機能</h3>
+    <ul>
+        <li>ドラッグ＆ドロップによる画像アップロード</li>
+        <li>複数画像の一括アップロード</li>
+        <li>アップロード画像のプレビュー表示</li>
+        <li>画像の個別削除機能</li>
+        <li>対応ファイル形式：JPG, PNG, SVG</li>
+    </ul>
+
+    <h3>UI/UX機能</h3>
+    <ul>
+        <li>セクション分けによる明確な構造化
+            <ul>
+                <li>API Key入力セクション</li>
+                <li>Webサイトからのテキスト抽出セクション</li>
+                <li>画像アップロードセクション</li>
+            </ul>
+        </li>
+        <li>インタラクティブなボタン状態管理
+            <ul>
+                <li>API Key入力時のボタン有効化</li>
+                <li>URLとAPI Key両方の入力時にテキスト抽出ボタン有効化</li>
+                <li>画像アップロード時の解析ボタン有効化</li>
+            </ul>
+        </li>
+        <li>プレビュー機能とファイル管理</li>
+        <li>エラー表示と処理状態の視覚的フィードバック</li>
+    </ul>
+
+    <h2>環境構築</h2>
+
+    <h3>前提条件</h3>
+    <ul>
+        <li>Node.js (v14以上)</li>
+        <li>npm (v6以上)</li>
+    </ul>
+
+    <h3>導入手順</h3>
+    <ol>
+        <li>依存パッケージのインストール
+            <pre class="bash">npm install</pre>
+        </li>
+        <li>Google Gemini APIキーの取得
+            <ul>
+                <li><a href="https://makersuite.google.com/app/apikey">Google AI Studio</a>にアクセス</li>
+                <li>APIキーを生成</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h2>実行方法</h2>
+    <ol>
+        <li>サーバーの起動
+            <pre class="bash">node server.js</pre>
+        </li>
+        <li>ブラウザでアプリケーションにアクセス
+            <pre>http://localhost:3001</pre>
+        </li>
+        <li>使用方法
+            <ul>
+                <li>Google Gemini APIキーを入力</li>
+                <li>解析したいWebサイトのURLを入力</li>
+                <li>「抽出開始」ボタンをクリック</li>
+                <li>結果が表示されたら、テキストの編集やExcelへのエクスポートが可能</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h2>ファイル構成</h2>
+
+    <h3>index.html</h3>
+    <p>メインのユーザーインターフェースを提供するHTMLファイル。</p>
+    <ul>
+        <li>APIキー入力フォーム</li>
+        <li>URL入力フォーム</li>
+        <li>結果表示エリア</li>
+        <li>エクスポートボタン</li>
+    </ul>
+
+    <h3>styles.css</h3>
+    <p>アプリケーションのスタイルを定義するCSSファイル。</p>
+    <ul>
+        <li>レスポンシブデザイン対応</li>
+        <li>ローディング表示のアニメーション</li>
+        <li>エラー表示のスタイリング</li>
+        <li>画像とテキスト表示のレイアウト</li>
+    </ul>
+
+    <h3>server.js</h3>
+    <p>サーバーサイドの処理を担当するNode.jsファイル。</p>
+
+    <h4>主な機能：</h4>
+    <ul>
+        <li>Webページからの画像URL抽出</li>
+        <li>画像データの取得とBase64エンコード</li>
+        <li>SVG画像のJPG変換</li>
+        <li>Gemini APIによるテキスト認識</li>
+        <li>エラーハンドリング</li>
+    </ul>
+
+    <h4>使用パッケージ</h4>
+    <pre><code>const express = require('express');      // Webサーバーフレームワーク
+const axios = require('axios');          // HTTPクライアント
+const cheerio = require('cheerio');      // HTML解析
+const { GoogleGenerativeAI } = require('@google/generative-ai');  // Gemini API
+const sharp = require('sharp');          // 画像処理</code></pre>
+
+    <h2>エラーハンドリング</h2>
+    <p>アプリケーションは以下のような状況で適切なエラーメッセージを表示します：</p>
+    <ul>
+        <li>APIキーまたはURLが未入力の場合</li>
+        <li>Webページからの画像抽出に失敗した場合</li>
+        <li>画像の取得に失敗した場合</li>
+        <li>テキスト認識に失敗した場合</li>
+        <li>Excelファイルの生成に失敗した場合</li>
+    </ul>
+
+    <h2>注意事項</h2>
+    <ul>
+        <li>大量の画像を含むWebサイトの場合、処理に時間がかかる可能性があります</li>
+        <li>SVG画像の変換は追加の処理時間が必要です</li>
+        <li>APIキーは適切に管理してください</li>
+        <li>一部のWebサイトでは、CORSポリシーにより画像の取得が制限される場合があります</li>
+    </ul>
+</body>
+</html> 
