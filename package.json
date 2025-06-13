@@ -4,7 +4,8 @@
   "description": "Webサイト画像テキスト抽出ツール v2",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "echo 'build step is not needed'"
   },
   "dependencies": {
     "@google/generative-ai": "^0.2.1",
